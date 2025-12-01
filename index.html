@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Breaking News 💕 — For Morokot (Kotkot Kach)</title>
+
+<style>
+  :root{
+    --accent1:#ff4d6d;
+    --accent2:#ff85a2;
+    --bg1:#0f2027;
+    --bg2:#2c5364;
+    --glass: rgba(255,255,255,0.06);
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family: "Segoe UI", Roboto, Arial, sans-serif;background:linear-gradient(160deg,var(--bg1),#203a43,var(--bg2));color:#fff}
+  .wrap{max-width:920px;margin:32px auto;padding:28px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);box-shadow: 0 8px 30px rgba(0,0,0,0.45)}
+  header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between}
+  h1{margin:0;font-size:1.9rem;color:var(--accent1);letter-spacing:0.6px}
+  .sub{opacity:.9;font-size:0.98rem}
+  .headline{margin:22px 0;font-size:1.15rem;line-height:1.5;color:#f7f7f7}
+  .meta{font-size:0.9rem;opacity:.85}
+
+  .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:14px}
+  .btn{
+    background:linear-gradient(45deg,var(--accent1),var(--accent2));
+    border:none;color:#fff;padding:12px 22px;border-radius:28px;font-weight:600;cursor:pointer;box-shadow:0 8px 20px rgba(255,77,109,0.12);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:active{transform:translateY(2px)}
+  .ghost{
+    background:transparent;border:1px solid rgba(255,255,255,0.12);padding:10px 18px;border-radius:18px;color:#fff;cursor:pointer;
+  }
+
+  /* message area */
+  .message-wrap{display:grid;grid-template-columns:1fr;gap:18px;align-items:start;margin-top:22px}
+  .card{
+    background:var(--glass);padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.04);
+  }
+  .message{font-size:1.05rem;line-height:1.8;color:#fff;min-height:120px;white-space:pre-wrap;overflow:hidden}
+  .signature{margin-top:14px;text-align:right;opacity:.9;font-size:.95rem}
+
+  /* typed text caret */
+  .typed {display:inline-block; border-right:2px solid rgba(255,255,255,0.8); padding-right:4px;animation:blink 1s infinite;}
+  @keyframes blink{50%{border-color:transparent}}
+
+  /* hidden -> reveal */
+  .hidden{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
+  .visible{opacity:1;transform:translateY(0);}
+
+  /* responsive video */
+  .video-wrap{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+  .video-wrap iframe{position:absolute;left:0;top:0;width:100%;height:100%;border:0}
+
+  /* floating hearts */
+  .hearts{pointer-events:none;position:fixed;left:0;right:0;top:0;bottom:0;z-index:0}
+  .heart{
+    position:absolute; font-size:22px; opacity:.95; transform:translate3d(0,0,0);
+    animation: floatUp linear forwards;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.35));
+  }
+  @keyframes floatUp{
+    from{transform:translateY(20vh) scale(.8); opacity:0}
+    10%{opacity:1}
+    to{transform:translateY(-120vh) scale(1.15); opacity:0}
+  }
+
+  footer{margin-top:20px;text-align:center;opacity:.9;font-size:0.9rem}
+
+  /* mobile */
+  @media (max-width:600px){
+    h1{font-size:1.5rem}
+    .wrap{margin:16px;padding:18px}
+  }
+</style>
+</head>
+<body>
+  <div class="hearts" id="heartsContainer"></div>
+
+  <main class="wrap" role="main">
+    <header>
+      <div>
+        <h1>🚨 Breaking News —  Update</h1>
+        <div class="sub">Right now: a guy is falling again — deeper and softer — for <strong>Morokot</strong> 💌 (my <strong>Kotkot Kach</strong> 🐱❤️)</div>
+      </div>
+      <div class="meta">Made  ❤️ by Dyma</div>
+    </header>
+
+    <section class="headline card">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <div style="flex:1">
+          <strong style="color:var(--accent1)">Short update:</strong>
+          <div style="margin-top:8px">I know I made mistakes. I want to say sorry and show you I can be better — not with words only, but with changes.</div>
+        </div>
+        <div style="min-width:220px">
+          <div style="font-size:0.9rem; opacity:.9; margin-bottom:8px">Song for this moment</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="playSongBtn">Play song ▶️</button>
+            <button class="ghost" id="revealBtn">Read full message 💖</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="message-wrap">
+      <div id="typedCard" class="card hidden">
+        <div class="message" id="typedMessage"></div>
+        <div class="signature">— Always yours, <strong>Kotkot Kach (Dyma)</strong></div>
+      </div>
+
+      <div id="videoCard" class="card hidden" style="display:none;">
+        <div style="font-weight:600;margin-bottom:8px">Song (click Play above to start)</div>
+        <div class="video-wrap" id="videoWrap">
+          <!-- iframe is inserted by JS only when user clicks Play -->
+        </div>
+      </div>
+    </div>
+
+    <footer>Tip: Tap "Play song" to start the YouTube song and "Read full message" to see the typed apology.</footer>
+  </main>
+
+<script>
+/* ---------- Config ---------- */
+/* Replace with the YouTube video id you want (current id from your link) */
+const YT_VIDEO_ID = "_-Qfregz_8o"; // from your provided URL
+const TYPED_TEXT = `My Morokot 💕,
+
+I made this because words in real life sometimes get stuck in my throat.
+I know I hurt you before — by being careless, by not listening, by letting pride get in the way.
+I'm sorry from the bottom of my heart. 🥹💔
+
+I am learning. I am changing.
+I promise more patience, honest listens, and protecting your heart the way it deserves. 💌
+
+Mix ban cute mes hah jg ngob hx nek kom cute pek yt b ngob bat tv.💕
+hx kom sv nham mi jrens pek na ot healthy te nham water oy jrens ke barom
+pel nham hv me phg hehehehehe, yy lg te kot cute.
+My little princess. mos oy kiss muy. 
+mug babe. pel chirstmas mean ey supries for u.
+— With all my love, Dyma`;
+
+/* ---------- Helpers: floating hearts ---------- */
+function spawnHeart(){
+  const cont = document.getElementById('heartsContainer');
+  const el = document.createElement('div');
+  el.className = 'heart';
+  const heartEmojis = ['💖','💕','💗','💌','❤️'];
+  el.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
+  const size = 14 + Math.random()*36;
+  el.style.fontSize = size + 'px';
+  el.style.left = Math.random()*100 + '%';
+  el.style.top = (80 + Math.random()*20) + 'vh';
+  el.style.opacity = (0.6 + Math.random()*0.5).toFixed(2);
+  el.style.animationDuration = (6 + Math.random()*8) + 's';
+  cont.appendChild(el);
+  // remove after animation
+  setTimeout(()=> el.remove(), 14000);
+}
+// spawn some periodically
+setInterval(spawnHeart, 900);
+for(let i=0;i<8;i++){ setTimeout(spawnHeart, i*300) }
+
+/* ---------- Typed message logic ---------- */
+function typeTextInto(el, text, speed=28){
+  el.textContent = '';
+  let i=0;
+  const typedSpan = document.createElement('span');
+  typedSpan.className='typed';
+  el.appendChild(typedSpan);
+  const interval = setInterval(()=>{
+    if(i>=text.length){ 
+      // remove caret
+      typedSpan.classList.remove('typed');
+      clearInterval(interval); 
+      return;
+    }
+    typedSpan.textContent += text[i++];
+    // keep scroll bottom visible if long
+    el.scrollTop = el.scrollHeight;
+  }, speed);
+}
+
+/* ---------- Reveal & Play handlers ---------- */
+const revealBtn = document.getElementById('revealBtn');
+const typedCard = document.getElementById('typedCard');
+const typedMessage = document.getElementById('typedMessage');
+const videoCard = document.getElementById('videoCard');
+const videoWrap = document.getElementById('videoWrap');
+const playSongBtn = document.getElementById('playSongBtn');
+
+revealBtn.addEventListener('click', ()=>{
+  // reveal typed card (if not already)
+  if(!typedCard.classList.contains('visible')){
+    typedCard.classList.add('visible');
+    typedCard.classList.remove('hidden');
+    // typing
+    typeTextInto(typedMessage, TYPED_TEXT, 24);
+    // also reveal video card gently
+    setTimeout(()=> {
+      videoCard.style.display = 'block';
+      setTimeout(()=> videoCard.classList.add('visible'), 100);
+      videoCard.classList.remove('hidden');
+    }, 600);
+  } else {
+    // already visible -> scroll into view
+    typedCard.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+});
+
+playSongBtn.addEventListener('click', ()=>{
+  // insert the iframe only when user clicks (prevents autoplay and avoids broken watch URL)
+  if(!videoWrap.querySelector('iframe')){
+    // use embed URL and enable autoplay=1 so clicking Play will start the song immediately
+    const src = `https://www.youtube.com/embed/${YT_VIDEO_ID}?rel=0&autoplay=1&modestbranding=1`;
+    const ifr = document.createElement('iframe');
+    ifr.src = src;
+    ifr.allow = 'autoplay; encrypted-media; picture-in-picture';
+    ifr.title = 'Love song for Morokot';
+    videoWrap.appendChild(ifr);
+    // show video card if not visible
+    if(videoCard.style.display === 'none' || !videoCard.classList.contains('visible')){
+      videoCard.style.display='block';
+      setTimeout(()=> videoCard.classList.add('visible'), 80);
+      videoCard.classList.remove('hidden');
+    }
+    // change button state
+    playSongBtn.textContent = 'Playing ▶️';
+    playSongBtn.disabled = true;
+    playSongBtn.style.opacity = 0.9;
+  }
+});
+
+/* small entrance animation for the wrap */
+document.querySelector('.wrap').style.opacity = 0;
+setTimeout(()=>{ document.querySelector('.wrap').style.transition = 'opacity .6s ease, transform .6s ease'; document.querySelector('.wrap').style.opacity=1 }, 80);
+</script>
+</body>
+</html>
